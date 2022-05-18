@@ -4,5 +4,7 @@ from . import views
 urlpatterns = [
     path('', views.index),
     path('relationships_terms', views.relationships_terms, name='scheme'),
-    path('create', views.create),
+    path('createTherm', views.createTherm, name='therm'),
+    path('createConnection', views.createConnection, name='connection'),
+    path('addXML', views.addXML, name='addXML'),
 ]

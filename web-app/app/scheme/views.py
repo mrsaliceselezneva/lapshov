@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 import json
 import xmltodict
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpRequest
 from .models import Therm, Connection, XmlFile
-from .forms import ThermForm
+from .forms import ThermForm, ConnectionForm, XMLForm
 
 
 def index(request):
@@ -130,7 +130,7 @@ def relationships_terms(request):
     return render(request, 'scheme/relationships_terms.html', post)
 
 
-def create(request):
+def createTherm(request: HttpRequest):
     error = ''
     if request.method == 'POST':
         form = ThermForm(request.POST, request.FILES)
@@ -145,4 +145,40 @@ def create(request):
         'form': form,
         'error': error
     }
-    return render(request, 'scheme/create.html', data)
+    return render(request, 'scheme/createTherm.html', data)
+
+
+def createConnection(request: HttpRequest):
+    error = ''
+    if request.method == 'POST':
+        form = ConnectionForm(request.POST, request.FILES)
+        print(form.errors)
+        if form.is_valid():
+            form.save()
+            return redirect('./')
+        else:
+            error = 'неверный формат данных'
+    form = ConnectionForm()
+    data = {
+        'form': form,
+        'error': error
+    }
+    return render(request, 'scheme/createConnection.html', data)
+
+
+def addXML(request: HttpRequest):
+    error = ''
+    if request.method == 'POST':
+        form = XMLForm(request.POST, request.FILES)
+        print(form.errors)
+        if form.is_valid():
+            form.save()
+            return redirect('./relationships_terms')
+        else:
+            error = 'неверный формат данных'
+    form = XMLForm()
+    data = {
+        'form': form,
+        'error': error
+    }
+    return render(request, 'scheme/addXML.html', data)
