@@ -1,0 +1,23 @@
+{% extends 'scheme/layout.html' %}
+{% load static %}
+
+{% block title %}
+    бд
+{% endblock %}
+
+{% block therm %}
+    <table border="1" width="100%">
+        <tr><th>id элемента</th><th>id 1-го термина</th><th>id 2-го термина</th><th>id связи</th></tr>
+    {% for answer in answers %}
+        <tr>
+            <td>{{ answer.id }}</td>
+            <td>{{ answer.therm1 }}</td>
+            <td>{{ answer.therm2 }}</td>
+            <td>{{ answer.connection }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}
+
+{% block connection %}
+{% endblock %}
